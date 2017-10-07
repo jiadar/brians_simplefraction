@@ -237,14 +237,24 @@ public class SimpleFraction implements SimpleFractionInterface, Comparable<Simpl
 		String fracstr = other.toString();
 		int c = Integer.parseInt(fracstr.split("/")[0]);
 		int d = Integer.parseInt(fracstr.split("/")[1]);
+		SimpleFraction tempf1 = new SimpleFraction(this.num, this.den);
+		SimpleFraction tempf2 = new SimpleFraction(c, d);
+		tempf1.simplifySimpleFraction();
+		tempf2.simplifySimpleFraction();
 		System.out.println("c: " + c);
 		System.out.println("num: " + this.num);
+		double do1 = tempf1.toDouble();
+		double do2 = tempf2.toDouble();
+		System.out.println("do1: " + do1);
+		System.out.println("do2: " + do2);
 
-		if (this.num == c && this.den == d) {
-			System.out.println("equals");
+		if (do1 == do2) {
 			return 0;
+			
 		}
-		if (this.num > c && this.den > d) {
+				
+		if (do1 > do2) {
+		
 			return 1;
 		}
 			return -1;
