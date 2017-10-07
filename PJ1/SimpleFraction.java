@@ -56,6 +56,11 @@ public class SimpleFraction implements SimpleFractionInterface, Comparable<Simpl
 	{
           // set this num equal to num
      // set this den equal to den
+	      
+	      if (den == 0){
+	          throw new SimpleFractionException("CANT HAVE 0 IN DEN");
+	       }
+
     this.num = num;
       this.den = den;
 
@@ -71,8 +76,8 @@ public class SimpleFraction implements SimpleFractionInterface, Comparable<Simpl
 	{
       
       // if den = 0 return SimpleFractionException (throw exception)
-      if (den==0){
-         throw SimpleFractionException;
+      if (den == 0){
+         throw new SimpleFractionException();
       }
       
     this.num = num;
@@ -81,7 +86,7 @@ public class SimpleFraction implements SimpleFractionInterface, Comparable<Simpl
        // if den < 0, set den = -den and num = -num
       if (this.den < 0){
          this.den = -den;
-         this.num= -num;
+         this.num = -num;
       }
 
       
@@ -193,6 +198,9 @@ public class SimpleFraction implements SimpleFractionInterface, Comparable<Simpl
 		String fracstr = secondFraction.toString();
 		int c = Integer.parseInt(fracstr.split("/")[0]);
 		int d = Integer.parseInt(fracstr.split("/")[1]);
+		if (den==0) {
+			throw new SimpleFractionException();
+		}
 		int divn= a*d;
 		int divd= b*c;
 		SimpleFractionInterface sf = new SimpleFraction(divn, divd);
@@ -210,26 +218,42 @@ public class SimpleFraction implements SimpleFractionInterface, Comparable<Simpl
 
 	public boolean equals(Object other)
 	{
-      // this is tricky, cause if you convert to double it will not exactly equal
-      // so you can check equality of int num and den but have to simply first in
-      // a temp var. note that you should simplify a copy, not the object
-      // ie something like (use other instead of f as your input param)
-      // return this.getNum()==f.getNum() && this.getDem() == f.getDem() ? true : false;
-      // or convert to a double and use a test with a bound (if the difference is less than delta,
-      // then consider equal) 
-		return false;
-	} // end equals
+		SimpleFraction sf = (SimpleFraction) other;
+		String fracstr = other.toString();
+		int c = Integer.parseInt(fracstr.split("/")[0]);
+		int d = Integer.parseInt(fracstr.split("/")[1]);
 
+		if (this.num == c && this.den == d) {
+			return true;
+		}
+			else {
+			return false;
+			}
+
+		}
 
 	public int compareTo(SimpleFraction other)
 	{
+		String fracstr = other.toString();
+		int c = Integer.parseInt(fracstr.split("/")[0]);
+		int d = Integer.parseInt(fracstr.split("/")[1]);
+		System.out.println("c: " + c);
+		System.out.println("num: " + this.num);
+
+		if (this.num == c && this.den == d) {
+			System.out.println("equals");
+			return 0;
+		}
+		if (this.num > c && this.den > d) {
+			return 1;
+		}
+			return -1;
+		
+	}
       // review the comparable interface but I think you will return 0 if equal (use equals)
       // return -1 if this < other (use test like equals but with < )
       // return 1 if this > other ... but look up comparable interface
       
-		return 0;
-	} // end compareTo
-
 	
 	public String toString()
 	{
